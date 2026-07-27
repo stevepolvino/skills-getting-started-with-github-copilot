@@ -1,11 +1,4 @@
-from fastapi.testclient import TestClient
-
-from src.app import app
-
-client = TestClient(app)
-
-
-def test_unregister_participant_removes_user_from_activity():
+def test_unregister_participant_removes_user_from_activity(client):
     activity_name = "Chess Club"
     email = "newstudent@mergington.edu"
 
@@ -22,7 +15,7 @@ def test_unregister_participant_removes_user_from_activity():
     assert email not in activities[activity_name]["participants"]
 
 
-def test_activities_endpoint_is_not_cached():
+def test_activities_endpoint_is_not_cached(client):
     response = client.get("/activities")
 
     assert response.status_code == 200
